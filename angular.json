@@ -1,0 +1,143 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "marbles-testing": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/workspace:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/marbles-testing",
+      "sourceRoot": "apps/marbles-testing/src",
+      "prefix": "marbles-testing",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/marbles-testing",
+            "index": "apps/marbles-testing/src/index.html",
+            "main": "apps/marbles-testing/src/main.ts",
+            "polyfills": "apps/marbles-testing/src/polyfills.ts",
+            "tsConfig": "apps/marbles-testing/tsconfig.app.json",
+            "assets": [
+              "apps/marbles-testing/src/favicon.ico",
+              "apps/marbles-testing/src/assets"
+            ],
+            "styles": ["apps/marbles-testing/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/marbles-testing/src/environments/environment.ts",
+                  "with": "apps/marbles-testing/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "marbles-testing:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "marbles-testing:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "marbles-testing:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/marbles-testing/tsconfig.app.json",
+              "apps/marbles-testing/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/marbles-testing/src/test.ts",
+            "tsConfig": "apps/marbles-testing/tsconfig.spec.json",
+            "karmaConfig": "apps/marbles-testing/karma.conf.js",
+            "polyfills": "apps/marbles-testing/src/polyfills.ts",
+            "styles": [],
+            "scripts": [],
+            "assets": []
+          }
+        }
+      }
+    },
+    "marbles-testing-e2e": {
+      "root": "apps/marbles-testing-e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/marbles-testing-e2e/protractor.conf.js",
+            "devServerTarget": "marbles-testing:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "marbles-testing:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/marbles-testing-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "karma",
+      "e2eTestRunner": "protractor"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "karma"
+    }
+  },
+  "defaultProject": "marbles-testing"
+}
